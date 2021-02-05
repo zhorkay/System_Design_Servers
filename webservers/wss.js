@@ -6,38 +6,23 @@ const PORT = myArgs[1];
 
 const wss = new WebSocket.Server({
     port: PORT,
+}, function (response) {
+    console.log(`${IDX}. SERVER created with Port: ${PORT}: ${response}`);
 });
 
-wss.on('connection', (ws) => {
-    ws.send(`Welcome to the chat, enjoy with the ${IDX}. websocket server`);
+let clientAddress = "";
 
-    ws.on('message', (data) => {
-        let message;
+wss.on('connection', function connection(ws, req) {
+    clientAddress = req.connection.remoteAddress;
+    console.log(`SERVER info: connection established with ${clientAddress}`);
 
-        try {
-            message = JSON.parse(data);
-        } catch (e) {
-            sendError(ws, 'Wrong format');
+    ws.on('message', function incoming(message) {
+       console.log('SERVER received: %s', message);
+    });
 
-            return;
-        }
+    ws.send(`Welcome to the ${IDX}. Websocket Server with Port: ${PORT}`);
 
-        if (message.type === 'NEW_MESSAGE') {
-            wss.clients.forEach((client) => {
-                if (client !== ws && client.readyState === WebSocket.OPEN) {
-                    client.send(data);
-                }
-            });
-        }
-
+    ws.on('close', function (reasonCode, description) {
+        console.log(`Client ${clientAddress} has disconnected due to: ${reasonCode} and left a message: ${description}`);
     });
 });
-
-const sendError = (ws, message) => {
-    const messageObject = {
-        type: 'ERROR',
-        payload: message,
-    };
-
-    ws.send(JSON.stringify(messageObject));
-};
