@@ -1,6 +1,6 @@
 const WebSocket = require('ws');
 
-const N = 30;
+const N = 20;
 for (let i = 0; i < N; i++) {
     // Create a new WebSocket.
     const ws = new WebSocket('ws://lbserver:8010/messengerws/');
