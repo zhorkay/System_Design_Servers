@@ -4,7 +4,9 @@
   "description": "",
   "main": "clients/clientapp_ws.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "cd fronten && npm run build",
+    "start": "node app.js",
+    "serve": "cd app && npm run start"
   },
   "keywords": [],
   "author": "",
