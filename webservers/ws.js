@@ -6,7 +6,7 @@ const IDX = myArgs[0];
 const PORT = myArgs[1];
 
 http.createServer(function (req, res) {
-
+    console.log(req);
     res.write(`Hello from webserver ${IDX}\n`); //write a response to the client
     res.end(); //end the response
-}).listen(PORT); //the server object listens on port 8080
+}).listen(PORT);

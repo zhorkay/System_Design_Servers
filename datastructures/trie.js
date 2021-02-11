@@ -82,6 +82,20 @@ class Trie {
         return this.root;
     }
 
+    getTops(word) {
+        let res = [];
+        let x = this.root;
+        for (let i = 0; i < word.length; i++) {
+            if (x.children[word[i]] == null) {
+                return res;
+            }
+            x = x.children[word[i]];
+        }
+
+        return x.getTopTen();
+
+    }
+
 }
 
 module.exports = {

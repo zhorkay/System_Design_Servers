@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client app calling Webserver</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<script>
+    const http = require('http');
+
+    const options = {
+        hostname: 'localhost',
+        port: 8087,
+        path: '/',
+        method: 'GET'
+    };
+
+    const req = http.request(options, res => {
+        console.log(res);
+        console.log(`statusCode: ${res.statusCode}`);
+
+        res.on('data', d => {
+            process.stdout.write(d);
+        });
+    });
+
+    req.on('error', error => {
+        console.error(error);
+    });
+
+    req.end();
+</script>
